@@ -1,0 +1,7 @@
+CompileFlags: # Tweak the parse settings, example directory given to show format
+  Add:
+    - "-I./external/SDL/include"          
+    - "-I./external/SDL/include/SDL3"   
+    - "-I./external/SDL_ttf/include/SDL3_ttf"        
+    - "-I./src"
+    - "-I./src/mappers"
