@@ -122,7 +122,6 @@ void gamepad_mapper(struct JoyPad *joyPad, SDL_Event *event) {
         if (event->gaxis.axis == 0) {
           key = RIGHT | LEFT;
           analog_value = 0;
-
         } else if (event->gaxis.axis == 1) {
           key = UP | DOWN;
         }

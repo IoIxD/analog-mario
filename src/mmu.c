@@ -61,9 +61,8 @@ bool smb1_read_intercepts(Memory *mem, uint16_t address, uint8_t *result) {
           max = max_right;
         }
       }
-      int speed = 0;
-      speed = analog_value / ((INT16_MAX - JOYSTICK_DEADZONE) / max);
-      printf("%d, %d\n", abs(max_left), abs(max_right));
+      int speed = analog_value / ((INT16_MAX - JOYSTICK_DEADZONE) / max);
+      // printf("%d, %d\n", abs(max_left), abs(max_right));
       if (correct_speed <= 0) {
         // speed = -speed;
       }
@@ -77,10 +76,10 @@ bool smb1_read_intercepts(Memory *mem, uint16_t address, uint8_t *result) {
   }
 
   if (address == 0x783) {
-    int16_t speed = (int16_t)((double)analog_value /
-                              (double)((INT16_MAX - JOYSTICK_DEADZONE))) *
-                    20.0;
-    *result = speed;
+    // int16_t speed = (int16_t)((double)analog_value /
+    // (double)((INT16_MAX - JOYSTICK_DEADZONE))) *
+    // 20.0;
+    *result = 10;
     return true;
   }
 
