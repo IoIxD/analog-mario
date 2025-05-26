@@ -51,15 +51,25 @@ bool smb1_read_intercepts(Memory *mem, uint16_t address, uint8_t *result) {
   }
   if (address == 0x0057) {
     if (gameState == 8) {
-      if (correct_speed == 0) {
-        correct_speed += 1;
+      int max = 1;
+      if (max_right != 0 && max_left != 0) {
+        if (abs(max_left) == abs(max_right)) {
+          max = max_right;
+        } else if (abs(max_left) >= abs(max_right)) {
+          max = max_left;
+        } else {
+          max = max_right;
+        }
       }
-      int16_t speed =
-          analog_value / ((INT16_MAX - JOYSTICK_DEADZONE) / correct_speed);
+      int speed = 0;
+      speed = analog_value / ((INT16_MAX - JOYSTICK_DEADZONE) / max);
+      printf("%d, %d\n", abs(max_left), abs(max_right));
       if (correct_speed <= 0) {
-        speed = -speed;
+        // speed = -speed;
       }
-      printf("%d\n", correct_speed);
+      if (abs(correct_speed) <= 2) {
+        speed = correct_speed;
+      }
       *result = speed;
 
       return true;
@@ -69,15 +79,11 @@ bool smb1_read_intercepts(Memory *mem, uint16_t address, uint8_t *result) {
   if (address == 0x783) {
     int16_t speed = (int16_t)((double)analog_value /
                               (double)((INT16_MAX - JOYSTICK_DEADZONE))) *
-                    10.0;
+                    20.0;
     *result = speed;
     return true;
   }
-  // max right velocity
-  //   if (address == 0x0456) {
-  //     *result = 0x30;
-  //     return true;
-  //   }
+
   return false;
 }
 // smb1 specific stuff
@@ -89,7 +95,6 @@ bool smb1_write_intercepts(Memory *mem, uint16_t address, uint8_t value) {
     gameState = value;
   }
   if (address == 0x783) {
-
     runningTimer = value;
   }
   if (address == 0x0057) {
