@@ -106,7 +106,7 @@ void gamepad_mapper(struct JoyPad *joyPad, SDL_Event *event) {
           analog_value = event->gaxis.value + JOYSTICK_DEADZONE;
           key = LEFT;
         } else if (event->gaxis.axis == 1) {
-          // key = UP;
+          key = UP;
         }
         joyPad->status |= key;
       } else if (event->gaxis.value > JOYSTICK_DEADZONE) {
@@ -114,7 +114,7 @@ void gamepad_mapper(struct JoyPad *joyPad, SDL_Event *event) {
           analog_value = event->gaxis.value - JOYSTICK_DEADZONE;
           key = RIGHT;
         } else if (event->gaxis.axis == 1) {
-          // key = DOWN;
+          key = DOWN;
         }
         joyPad->status |= key;
       } else {
